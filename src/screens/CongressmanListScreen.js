@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import MemberListView from '../components/MemberListView';
 import {fetchMembersRequest} from '../redux/actions/congressMembersAction';
 
 const CongressmanList = () => {
@@ -22,11 +23,7 @@ const CongressmanList = () => {
     <View style={styles.container}>
       <FlatList
         data={members}
-        renderItem={({item}) => (
-          <View style={styles.personContainer}>
-            <Text style={styles.personName}>{item.nome}</Text>
-          </View>
-        )}
+        renderItem={({item}) => <MemberListView member={item} />}
         keyExtractor={item => item.id.toString()}
       />
     </View>
