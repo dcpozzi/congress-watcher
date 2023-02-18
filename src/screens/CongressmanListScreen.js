@@ -35,14 +35,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  personContainer: {
-    padding: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  personName: {
-    fontSize: 18,
-  },
 });
 
 export default CongressmanList;
