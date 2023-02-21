@@ -1,6 +1,5 @@
-import {combineReducers} from 'redux';
 import {congressMembersReducer} from './congressMembersReducer';
-const reducers = combineReducers({
+const reducers = {
   congressMembersReducer,
-});
+};
 export default reducers;
