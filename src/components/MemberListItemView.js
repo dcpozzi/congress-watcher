@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 
-const MemberListView = props => {
+const MemberListItemView = props => {
   const member = props.member;
   return (
     <View style={styles.memberContainer}>
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MemberListView;
+export default MemberListItemView;

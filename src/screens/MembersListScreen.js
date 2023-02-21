@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import MemberListView from '../components/MemberListView';
+import MemberListItemView from '../components/MemberListItemView';
 import {
   fetchMembersRequest,
   selectAllMembers,
 } from '../redux/reducers/membersSlicer';
 
-const CongressmanList = () => {
+const MembersListView = () => {
   const members = useSelector(selectAllMembers);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -26,7 +26,7 @@ const CongressmanList = () => {
     <View style={styles.container}>
       <FlatList
         data={members}
-        renderItem={({item}) => <MemberListView member={item} />}
+        renderItem={({item}) => <MemberListItemView member={item} />}
         keyExtractor={item => item.id.toString()}
       />
     </View>
@@ -40,4 +40,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CongressmanList;
+export default MembersListView;
