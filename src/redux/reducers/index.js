@@ -1,5 +1,6 @@
-import {congressMembersReducer} from './congressMembersReducer';
+//import {congressMembersReducer} from './congressMembersReducer';
+import membersReducer from './membersSlicer';
 const reducers = {
-  congressMembersReducer,
+  membersReducer,
 };
 export default reducers;

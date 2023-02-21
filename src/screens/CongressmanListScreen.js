@@ -2,10 +2,13 @@ import React, {useEffect} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import MemberListView from '../components/MemberListView';
-import {fetchMembersRequest} from '../redux/actions/congressMembersAction';
+import {
+  fetchMembersRequest,
+  selectAllMembers,
+} from '../redux/reducers/membersSlicer';
 
 const CongressmanList = () => {
-  const members = useSelector(state => state).congressMembersReducer.members;
+  const members = useSelector(selectAllMembers);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchMembersRequest());
