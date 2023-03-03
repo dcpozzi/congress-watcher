@@ -7,7 +7,7 @@ import {
   selectAllMembers,
 } from '../redux/reducers/membersSlicer';
 
-const MembersListView = () => {
+const MembersListScreen = ({navigation}) => {
   const members = useSelector(selectAllMembers);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -26,7 +26,12 @@ const MembersListView = () => {
     <View style={styles.container}>
       <FlatList
         data={members}
-        renderItem={({item}) => <MemberListItemView member={item} />}
+        renderItem={({item}) => (
+          <MemberListItemView
+            onPress={() => navigation.navigate('Deputado', {memberId: item.id})}
+            member={item}
+          />
+        )}
         keyExtractor={item => item.id.toString()}
       />
     </View>
@@ -40,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MembersListView;
+export default MembersListScreen;

@@ -15,13 +15,12 @@ export const fetchMembersRequest = createAsyncThunk(
       .catch(err => {
         console.log('Err: ', err);
       });
-    console.log(response);
     return response.data;
   },
 );
 
 const membersSlice = createSlice({
-  name: 'posts',
+  name: 'members',
   initialState,
   reducers: {},
   extraReducers(builder) {
