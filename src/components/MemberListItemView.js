@@ -15,16 +15,6 @@ const MemberListItemView = props => {
   const onPress = props.onPress;
 
   return (
-    // <TouchableOpacity style={styles.memberContainer} onPress={onPress}>
-    //   <Text style={styles.memberName}>{member.nome}</Text>
-    //   <Image
-    //     style={styles.tinyLogo}
-    //     source={{
-    //       uri: member.urlFoto,
-    //     }}
-    //   />
-    // </TouchableOpacity>
-
     <Pressable onPress={onPress}>
       <Box
         backgroundColor={'primary.50'}
