@@ -17,7 +17,7 @@ const MemberListItemView = props => {
   return (
     <Pressable onPress={onPress}>
       <Box
-        backgroundColor={'primary.50'}
+        backgroundColor={'primary.100'}
         borderBottomWidth="1"
         _dark={{
           borderColor: 'muted.50',
@@ -46,6 +46,7 @@ const MemberListItemView = props => {
             </Text>
             <Text
               color="coolGray.600"
+              bold
               _dark={{
                 color: 'warmGray.200',
               }}>

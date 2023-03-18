@@ -2,23 +2,31 @@ import React, {useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchMemberRequest, getMember} from '../redux/reducers/memberSlicer';
-import {Text, Image, HStack, Box, VStack, Heading, Divider} from 'native-base';
+import LoadingSpinner from '../components/LoadingSpinner';
+import {
+  Button,
+  Text,
+  Image,
+  HStack,
+  Box,
+  VStack,
+  Heading,
+  Divider,
+  ScrollView,
+} from 'native-base';
 import moment from 'moment';
 
 const MemberDetailScreen = props => {
   const memberId = props.route.params.memberId;
+  const navigation = props.navigation;
   const member = useSelector(getMember);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchMemberRequest(memberId));
   }, [dispatch]);
 
-  if (!member || !member.ultimoStatus) {
-    return (
-      <View>
-        <Text>'Carregando...'</Text>
-      </View>
-    );
+  if (member || !member.ultimoStatus) {
+    return <LoadingSpinner />;
   }
   return (
     <Box backgroundColor={'primary.50'} h={'full'}>
@@ -46,42 +54,49 @@ const MemberDetailScreen = props => {
           </HStack>
         </VStack>
       </HStack>
-      <VStack p={'2'} mt={2}>
-        <Text fontSize={'2xl'}>Contato</Text>
-        <Text fontSize={'xl'}>{member.ultimoStatus.email}</Text>
-      </VStack>
-      <Divider
-        my="2"
-        _light={{
-          bg: 'muted.800',
-        }}
-        _dark={{
-          bg: 'muted.50',
-        }}
-      />
-      <VStack p={'2'} mt={2}>
-        <Text fontSize={'2xl'}>Nascimento</Text>
-        <Text fontSize={'xl'}>
-          {member.municipioNascimento}-{member.ufNascimento}
-        </Text>
-        <Text fontSize={'xl'}>
-          {moment(member.dataNascimento, 'YYYY-MM-DD').format('DD/MM/YYYY')}
-        </Text>
-      </VStack>
-      <Divider
-        my="2"
-        _light={{
-          bg: 'muted.800',
-        }}
-        _dark={{
-          bg: 'muted.50',
-        }}
-      />
-      <VStack p={'2'}>
-        <Text fontSize={'2xl'}>Gabinete</Text>
-        <Text fontSize={'xl'}>{member.ultimoStatus.gabinete.email}</Text>
-        <Text fontSize={'xl'}>{member.ultimoStatus.gabinete.telefone}</Text>
-      </VStack>
+      <ScrollView w="full" h="80">
+        <VStack p={2}>
+          <Text fontSize={'2xl'}>Contato</Text>
+          <Text fontSize={'xl'}>{member.ultimoStatus.email}</Text>
+        </VStack>
+        <Divider
+          my="2"
+          _light={{
+            bg: 'muted.800',
+          }}
+          _dark={{
+            bg: 'muted.50',
+          }}
+        />
+        <VStack p={2}>
+          <Text fontSize={'2xl'}>Nascimento</Text>
+          <Text fontSize={'xl'}>
+            {member.municipioNascimento}-{member.ufNascimento}
+          </Text>
+          <Text fontSize={'xl'}>
+            {moment(member.dataNascimento, 'YYYY-MM-DD').format('DD/MM/YYYY')}
+          </Text>
+        </VStack>
+        <Divider
+          my="2"
+          _light={{
+            bg: 'muted.800',
+          }}
+          _dark={{
+            bg: 'muted.50',
+          }}
+        />
+        <VStack p={2}>
+          <Text fontSize={'2xl'}>Gabinete</Text>
+          <Text fontSize={'xl'}>{member.ultimoStatus.gabinete.email}</Text>
+          <Text fontSize={'xl'}>{member.ultimoStatus.gabinete.telefone}</Text>
+        </VStack>
+      </ScrollView>
+      <Button
+        size={'lg'}
+        onPress={() => navigation.navigate('Despesas', {memberId: memberId})}>
+        Despesas
+      </Button>
     </Box>
   );
 };

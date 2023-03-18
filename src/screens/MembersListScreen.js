@@ -1,11 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {Box, HStack, Input, Pressable} from 'native-base';
 import {useDispatch, useSelector} from 'react-redux';
 import MemberListItemView from '../components/MemberListItemView';
+import LoadingSpinner from '../components/LoadingSpinner';
 import {
   fetchMembersRequest,
   selectAllMembers,
 } from '../redux/reducers/membersSlicer';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const MembersListScreen = ({navigation}) => {
   const members = useSelector(selectAllMembers);
@@ -14,18 +17,32 @@ const MembersListScreen = ({navigation}) => {
     dispatch(fetchMembersRequest());
   }, [dispatch]);
 
+  const [nameFilter, setNameFilter] = React.useState('');
+
   if (!members) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.personName}>'Carregando...'</Text>
-      </View>
-    );
+    return <LoadingSpinner />;
   }
+  const filteredMembers = members.filter(member =>
+    member.nome.toLowerCase().includes(nameFilter.toLowerCase()),
+  );
 
   return (
-    <View style={styles.container}>
+    <Box backgroundColor={'primary.50'} h="full">
+      <HStack backgroundColor={'primary.800'}>
+        <Input
+          variant="underlined"
+          mx="3"
+          placeholder="Digite o nome do deputado"
+          h="full"
+          b
+          w="full"
+          color={'warmGray.50'}
+          fontSize={'lg'}
+          onChangeText={setNameFilter}
+        />
+      </HStack>
       <FlatList
-        data={members}
+        data={filteredMembers}
         renderItem={({item}) => (
           <MemberListItemView
             onPress={() => navigation.navigate('Deputado', {memberId: item.id})}
@@ -34,7 +51,7 @@ const MembersListScreen = ({navigation}) => {
         )}
         keyExtractor={item => item.id.toString()}
       />
-    </View>
+    </Box>
   );
 };
 
