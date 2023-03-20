@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
-import {Box, HStack, Input, Pressable} from 'native-base';
+import {Box, HStack, Input, FlatList} from 'native-base';
 import {useDispatch, useSelector} from 'react-redux';
 import MemberListItemView from '../components/MemberListItemView';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -8,7 +7,6 @@ import {
   fetchMembersRequest,
   selectAllMembers,
 } from '../redux/reducers/membersSlicer';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const MembersListScreen = ({navigation}) => {
   const members = useSelector(selectAllMembers);
@@ -17,13 +15,13 @@ const MembersListScreen = ({navigation}) => {
     dispatch(fetchMembersRequest());
   }, [dispatch]);
 
-  const [nameFilter, setNameFilter] = React.useState('');
+  const [namesFilter, setNamesFilter] = React.useState('');
 
   if (!members) {
     return <LoadingSpinner />;
   }
   const filteredMembers = members.filter(member =>
-    member.nome.toLowerCase().includes(nameFilter.toLowerCase()),
+    member.nome.toLowerCase().includes(namesFilter.toLowerCase()),
   );
 
   return (
@@ -38,7 +36,7 @@ const MembersListScreen = ({navigation}) => {
           w="full"
           color={'warmGray.50'}
           fontSize={'lg'}
-          onChangeText={setNameFilter}
+          onChangeText={setNamesFilter}
         />
       </HStack>
       <FlatList
@@ -54,12 +52,5 @@ const MembersListScreen = ({navigation}) => {
     </Box>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
 
 export default MembersListScreen;
