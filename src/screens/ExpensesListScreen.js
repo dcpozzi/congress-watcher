@@ -3,6 +3,7 @@ import {Box, Text, FlatList, HStack, Spinner, VStack} from 'native-base';
 import {useDispatch, useSelector} from 'react-redux';
 import ExpensesListItemView from '../components/ExpensesListItemView';
 import LoadingSpinner from '../components/LoadingSpinner';
+import {brlCurrencyFormat} from '../helpers/masks';
 import {
   fetchExpensesRequest,
   getExpenses,
@@ -26,12 +27,6 @@ const MembersListScreen = props => {
     (accumulator, expense) => accumulator + expense.valorDocumento,
     0,
   );
-
-  const brlCurrencyFormat = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-    maximumFractionDigits: 2,
-  });
 
   return (
     <Box bg={'primary.50'} h={'full'}>

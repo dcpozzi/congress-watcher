@@ -2,15 +2,12 @@ import React from 'react';
 import {View, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {Box, VStack, HStack, Text, Pressable} from 'native-base';
 import moment from 'moment';
+import {brlCurrencyFormat} from '../helpers/masks';
 
 const ExpensesListItemView = props => {
   const expense = props.expense;
   const onPress = props.onPress;
-  const brlCurrencyFormat = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-    maximumFractionDigits: 2,
-  });
+
   return (
     <Pressable onPress={onPress}>
       <Box

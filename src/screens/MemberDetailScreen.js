@@ -25,7 +25,7 @@ const MemberDetailScreen = props => {
     dispatch(fetchMemberRequest(memberId));
   }, [dispatch]);
 
-  if (member || !member.ultimoStatus) {
+  if (!member || !member.ultimoStatus) {
     return <LoadingSpinner />;
   }
   return (
