@@ -10,11 +10,9 @@ const initialState = {
 export const fetchMembersRequest = createAsyncThunk(
   'members/fetchMembers',
   async () => {
-    const response = await congressApi
-      .get('/deputados?ordem=ASC&ordenarPor=nome')
-      .catch(err => {
-        console.log('Err: ', err);
-      });
+    const response = await congressApi.get(
+      '/deputados?ordem=ASC&ordenarPor=nome',
+    );
     return response.data;
   },
 );

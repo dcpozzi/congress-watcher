@@ -1,22 +1,30 @@
 import React, {useEffect, useState} from 'react';
-import {Box, HStack, Input, FlatList} from 'native-base';
+import {Box, HStack, Input, FlatList, Heading} from 'native-base';
 import {useDispatch, useSelector} from 'react-redux';
 import MemberListItemView from '../components/MemberListItemView';
 import LoadingSpinner from '../components/LoadingSpinner';
+import OfflineSystemMessage from '../components/OfflineSystemMessage';
 import {
   fetchMembersRequest,
   selectAllMembers,
+  getStatus,
+  getError,
 } from '../redux/reducers/membersSlicer';
 
 const MembersListScreen = ({navigation}) => {
   const members = useSelector(selectAllMembers);
+  const status = useSelector(getStatus);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchMembersRequest());
   }, [dispatch]);
 
   const [namesFilter, setNamesFilter] = React.useState('');
 
+  if (status == 'failed') {
+    return <OfflineSystemMessage />;
+  }
   if (!members) {
     return <LoadingSpinner />;
   }
