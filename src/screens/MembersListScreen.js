@@ -10,6 +10,7 @@ import {
   getStatus,
   getError,
 } from '../redux/reducers/membersSlicer';
+import {Screens} from '../constants/navigatorScreens';
 
 const MembersListScreen = ({navigation}) => {
   const members = useSelector(selectAllMembers);
@@ -51,7 +52,11 @@ const MembersListScreen = ({navigation}) => {
         data={filteredMembers}
         renderItem={({item}) => (
           <MemberListItemView
-            onPress={() => navigation.navigate('Deputado', {memberId: item.id})}
+            onPress={() =>
+              navigation.navigate(Screens.MEMBER_DETAIL_SCREEN, {
+                memberId: item.id,
+              })
+            }
             member={item}
           />
         )}

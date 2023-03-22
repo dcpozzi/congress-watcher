@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import ExpensesListItemView from '../components/ExpensesListItemView';
 import LoadingSpinner from '../components/LoadingSpinner';
 import {brlCurrencyFormat} from '../helpers/masks';
+import {Screens} from '../constants/navigatorScreens';
 import {
   fetchExpensesRequest,
   getExpenses,
@@ -39,7 +40,11 @@ const MembersListScreen = props => {
         data={expenses}
         renderItem={({item}) => (
           <ExpensesListItemView
-            onPress={() => navigation.navigate('Despesa', {expense: item})}
+            onPress={() =>
+              navigation.navigate(Screens.EXPENSE_DETAIL_SCREEN, {
+                expense: item,
+              })
+            }
             expense={item}
           />
         )}

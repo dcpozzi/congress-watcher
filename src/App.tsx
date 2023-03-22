@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MemberDetailScreen from './screens/MemberDetailScreen';
 import ExpenseDetailScreen from './screens/ExpenseDetailScreen';
 import { NativeBaseProvider } from "native-base";
-
+import { Screens } from './constants/navigatorScreens';
 const Stack = createNativeStackNavigator();
 const headerBackgroundColor = '#0e7490';
 function App(): JSX.Element {
@@ -18,10 +18,10 @@ function App(): JSX.Element {
       <NativeBaseProvider>
       <NavigationContainer >
         <Stack.Navigator initialRouteName="Deputados" screenOptions={{headerShown:false, gestureEnabled: true}}>
-          <Stack.Screen name="Deputados" component={MembersListScreen} />
-          <Stack.Screen name="Deputado" component={MemberDetailScreen} />
-          <Stack.Screen name="Despesas" component={ExpensesListScreen} />
-          <Stack.Screen name="Despesa" component={ExpenseDetailScreen} />
+          <Stack.Screen name={Screens.MEMBERS_LIST_SCREEN} component={MembersListScreen} />
+          <Stack.Screen name={Screens.MEMBER_DETAIL_SCREEN} component={MemberDetailScreen} />
+          <Stack.Screen name={Screens.EXPENSES_LIST_SCREEN} component={ExpensesListScreen} />
+          <Stack.Screen name={Screens.EXPENSE_DETAIL_SCREEN} component={ExpenseDetailScreen} />
         </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

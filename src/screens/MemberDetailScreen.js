@@ -15,6 +15,7 @@ import {
   ScrollView,
 } from 'native-base';
 import moment from 'moment';
+import {Screens} from '../constants/navigatorScreens';
 
 const MemberDetailScreen = props => {
   const memberId = props.route.params.memberId;
@@ -94,7 +95,11 @@ const MemberDetailScreen = props => {
       </ScrollView>
       <Button
         size={'lg'}
-        onPress={() => navigation.navigate('Despesas', {memberId: memberId})}>
+        onPress={() =>
+          navigation.navigate(Screens.EXPENSES_LIST_SCREEN, {
+            memberId: memberId,
+          })
+        }>
         Despesas
       </Button>
     </Box>
