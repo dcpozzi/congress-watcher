@@ -1,7 +1,11 @@
 import React, {useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchMemberRequest, getMember} from '../redux/reducers/memberSlicer';
+import {
+  fetchMemberRequest,
+  getMember,
+  memberSlice,
+} from '../redux/reducers/memberSlicer';
 import LoadingSpinner from '../components/LoadingSpinner';
 import {
   Button,
@@ -16,19 +20,24 @@ import {
 } from 'native-base';
 import moment from 'moment';
 import {Screens} from '../constants/navigatorScreens';
-
 const MemberDetailScreen = props => {
   const memberId = props.route.params.memberId;
   const navigation = props.navigation;
   const member = useSelector(getMember);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchMemberRequest(memberId));
   }, [dispatch]);
 
+  navigation.addListener('blur', () => {
+    dispatch(memberSlice.actions.reset());
+  });
+
   if (!member || !member.ultimoStatus) {
     return <LoadingSpinner />;
   }
+
   return (
     <Box backgroundColor={'primary.50'} h={'full'}>
       <HStack

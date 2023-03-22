@@ -19,10 +19,10 @@ export const fetchMemberRequest = createAsyncThunk(
   },
 );
 
-const memberSlice = createSlice({
+export const memberSlice = createSlice({
   name: 'member',
   initialState,
-  reducers: {},
+  reducers: {reset: () => initialState},
   extraReducers(builder) {
     builder
       .addCase(fetchMemberRequest.pending, (state, action) => {
