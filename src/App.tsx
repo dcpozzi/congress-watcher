@@ -16,17 +16,8 @@ function App(): JSX.Element {
      
     <Provider store={store}>
       <NativeBaseProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Deputados"
-              screenOptions={{
-                headerStyle: {
-                  backgroundColor: headerBackgroundColor,
-                },
-                headerTintColor: '#fff',
-                headerTitleStyle: {
-                  fontWeight: 'bold',
-                },
-              }}>
+      <NavigationContainer >
+        <Stack.Navigator initialRouteName="Deputados" screenOptions={{headerShown:false, gestureEnabled: true}}>
           <Stack.Screen name="Deputados" component={MembersListScreen} />
           <Stack.Screen name="Deputado" component={MemberDetailScreen} />
           <Stack.Screen name="Despesas" component={ExpensesListScreen} />
