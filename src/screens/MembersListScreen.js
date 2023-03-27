@@ -9,7 +9,6 @@ import {
   fetchMembersRequest,
   selectAllMembers,
   getStatus,
-  getError,
 } from '../redux/reducers/membersSlicer';
 import {Screens} from '../constants/navigatorScreens';
 
@@ -32,48 +31,22 @@ const MembersListScreen = ({navigation}) => {
   if (!members) {
     return <LoadingSpinner />;
   }
-  const filteredMembers = members
-    .filter(member =>
-      member.nome.toLowerCase().includes(namesFilter.toLowerCase()),
-    )
-    .filter(
-      member => selectedParty === '' || member.siglaPartido === selectedParty,
-    )
-    .filter(member => selectedState === '' || member.siglaUf === selectedState)
-    .slice(0, 15);
 
-  const onCloseModal = filter => {
-    setShowModal(false);
-    if (!filter) return;
-
-    setSelectedState(filter.state);
-    setSelectedParty(filter.party);
+  // if (!namesFilter && !selectedParty && !selectedState) {
+  const emptyFilters = () => {
+    return (
+      <Box backgroundColor={'primary.50'} h="full">
+        <HStack justifyContent={'center'}>
+          <Text fontSize={'md'}>
+            Escolha ao menos um filtro ou digite o nome do deputado.
+          </Text>
+        </HStack>
+      </Box>
+    );
   };
-  console.log('showModal: ' + showModal);
-  return (
-    <Box backgroundColor={'primary.50'} h="full">
-      <HStack backgroundColor={'primary.800'}>
-        <Input
-          isFocused={true}
-          variant="underlined"
-          mx="3"
-          placeholder="Digite o nome do deputado"
-          h="full"
-          b
-          w="2/3"
-          color={'warmGray.50'}
-          fontSize={'lg'}
-          onChangeText={setNamesFilter}
-        />
-        <Button onPress={() => setShowModal(true)}>Filtrar</Button>
-        <MemberFilterModal
-          showModal={showModal}
-          onClose={onCloseModal}></MemberFilterModal>
-      </HStack>
-      <HStack backgroundColor={'primary.500'}>
-        <Text>{selectedState}</Text>
-        <Text>{selectedParty}</Text>
-      </HStack>
+
+  const membersList = () => {
+    return (
       <FlatList
         data={filteredMembers}
         removeClippedSubviews={true}
@@ -89,6 +62,55 @@ const MembersListScreen = ({navigation}) => {
         )}
         keyExtractor={item => item.id.toString()}
       />
+    );
+  };
+
+  const filteredMembers = members
+    .filter(member =>
+      member.nome.toLowerCase().includes(namesFilter.toLowerCase()),
+    )
+    .filter(
+      member => selectedParty === '' || member.siglaPartido === selectedParty,
+    )
+    .filter(member => selectedState === '' || member.siglaUf === selectedState);
+
+  const onCloseModal = filter => {
+    setShowModal(false);
+    if (!filter) return;
+
+    setSelectedState(filter.state);
+    setSelectedParty(filter.party);
+  };
+  console.log('showModal: ' + showModal);
+  return (
+    <Box backgroundColor={'primary.50'} h="full">
+      <HStack backgroundColor={'primary.800'}>
+        <Input
+          flexGrow={1}
+          isFocused={true}
+          variant="underlined"
+          pl="2"
+          placeholder="Digite o nome do deputado"
+          h="full"
+          b
+          color={'warmGray.50'}
+          fontSize={'lg'}
+          onChangeText={setNamesFilter}
+        />
+        <Button mb="0.1" onPress={() => setShowModal(true)}>
+          Filtrar
+        </Button>
+        <MemberFilterModal
+          showModal={showModal}
+          onClose={onCloseModal}></MemberFilterModal>
+      </HStack>
+      <HStack backgroundColor={'primary.500'}>
+        <Text>{selectedState}</Text>
+        <Text>{selectedParty}</Text>
+      </HStack>
+      {!namesFilter && !selectedParty && !selectedState
+        ? emptyFilters()
+        : membersList()}
     </Box>
   );
 };
