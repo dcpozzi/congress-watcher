@@ -76,12 +76,12 @@ const MembersListScreen = ({navigation}) => {
 
   const onCloseModal = filter => {
     setShowModal(false);
-    if (!filter) return;
 
+    if (!filter) return;
     setSelectedState(filter.state);
     setSelectedParty(filter.party);
   };
-  console.log('showModal: ' + showModal);
+
   return (
     <Box backgroundColor={'primary.50'} h="full">
       <HStack backgroundColor={'primary.800'}>
