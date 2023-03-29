@@ -1,5 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {Box, HStack, Input, FlatList, Text, Button} from 'native-base';
+import {
+  Box,
+  HStack,
+  Input,
+  FlatList,
+  Text,
+  Button,
+  Container,
+} from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 import MemberListItemView from '../components/MemberListItemView';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -82,6 +91,25 @@ const MembersListScreen = ({navigation}) => {
     setSelectedParty(filter.party);
   };
 
+  const renderFilter = (value, setValue) => {
+    if (value === '') {
+      return <></>;
+    }
+
+    return (
+      <HStack>
+        <Text pt={2} pl={1}>
+          {value}
+        </Text>
+        <Icon.Button
+          backgroundColor="#00000000"
+          color="#606060"
+          name="close"
+          onPress={() => setValue('')}></Icon.Button>
+      </HStack>
+    );
+  };
+
   return (
     <Box backgroundColor={'primary.50'} h="full">
       <HStack backgroundColor={'primary.800'}>
@@ -102,10 +130,18 @@ const MembersListScreen = ({navigation}) => {
         </Button>
         <MemberFilterModal
           showModal={showModal}
-          onClose={onCloseModal}></MemberFilterModal>
+          onClose={onCloseModal}
+          filter={{
+            state: selectedState,
+            party: selectedParty,
+          }}></MemberFilterModal>
       </HStack>
       <HStack backgroundColor={'primary.500'}>
-        <Text>{selectedState}</Text>
+        <HStack w={'full'}>
+          {renderFilter(selectedState, setSelectedState)}
+          {renderFilter(selectedParty, setSelectedParty)}
+        </HStack>
+
         <Text>{selectedParty}</Text>
       </HStack>
       {!namesFilter && !selectedParty && !selectedState
