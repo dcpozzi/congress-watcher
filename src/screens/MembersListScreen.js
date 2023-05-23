@@ -19,16 +19,22 @@ import {
   selectAllMembers,
   getStatus,
 } from '../redux/reducers/membersSlicer';
+import {
+  fetchMembersStatsRequest,
+  selectAllMembersStats,
+} from '../redux/reducers/membersStatsSlicer';
 import {Screens} from '../constants/navigatorScreens';
 
 const MembersListScreen = ({navigation}) => {
   const members = useSelector(selectAllMembers);
   const status = useSelector(getStatus);
+  const membersStats = useSelector(selectAllMembersStats);
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [selectedState, setSelectedState] = React.useState('');
   const [selectedParty, setSelectedParty] = React.useState('');
   useEffect(() => {
+    dispatch(fetchMembersStatsRequest());
     dispatch(fetchMembersRequest());
   }, [dispatch]);
 
@@ -37,7 +43,7 @@ const MembersListScreen = ({navigation}) => {
   if (status == 'failed') {
     return <OfflineSystemMessage />;
   }
-  if (!members) {
+  if (!members || !membersStats) {
     return <LoadingSpinner />;
   }
 
@@ -66,12 +72,26 @@ const MembersListScreen = ({navigation}) => {
                 memberId: item.id,
               })
             }
-            member={item}
+            member={mergeMemberStats(item)}
           />
         )}
         keyExtractor={item => item.id.toString()}
       />
     );
+
+    function mergeMemberStats(item) {
+      //console.log(item);
+      if (membersStats === null) return item;
+      //console.log(membersStats[item.id]);
+      return {...item, ...membersStats[item.id]};
+    }
+
+    function getMemberStats(item) {
+      //console.log(item);
+      if (membersStats === null) return {};
+      //console.log(membersStats[item.id]);
+      return membersStats[item.id];
+    }
   };
 
   const filteredMembers = members
@@ -110,6 +130,7 @@ const MembersListScreen = ({navigation}) => {
     );
   };
 
+  //console.log(membersStats);
   return (
     <Box backgroundColor={'primary.50'} h="full">
       <HStack backgroundColor={'primary.800'}>
