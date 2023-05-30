@@ -80,16 +80,12 @@ const MembersListScreen = ({navigation}) => {
     );
 
     function mergeMemberStats(item) {
-      //console.log(item);
       if (membersStats === null) return item;
-      //console.log(membersStats[item.id]);
       return {...item, ...membersStats[item.id]};
     }
 
     function getMemberStats(item) {
-      //console.log(item);
       if (membersStats === null) return {};
-      //console.log(membersStats[item.id]);
       return membersStats[item.id];
     }
   };

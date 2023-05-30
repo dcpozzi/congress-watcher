@@ -23,20 +23,27 @@ const MemberFilterModal = props => {
 
   const createSelectStateItems = () => {
     let items = [];
-    items.push(<Select.Item label="Nenhum" value={''} />);
+    items.push(<Select.Item label="Nenhum" value={''} key={'empty_state'} />);
     states.forEach(element => {
-      items.push(<Select.Item label={element.name} value={element.value} />);
+      items.push(
+        <Select.Item
+          label={element.name}
+          value={element.value}
+          key={element.value}
+        />,
+      );
     });
     return items;
   };
   const createSelectPartiesItems = () => {
     let items = [];
-    items.push(<Select.Item label="Nenhum" value={''} />);
+    items.push(<Select.Item label="Nenhum" value={''} key={'empty_party'} />);
     parties.forEach(element => {
       items.push(
         <Select.Item
           label={`${element.sigla} - ${element.nome}`}
           value={element.sigla}
+          key={element.sigla}
         />,
       );
     });

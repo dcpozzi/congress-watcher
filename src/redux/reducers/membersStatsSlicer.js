@@ -10,7 +10,9 @@ const initialState = {
 export const fetchMembersStatsRequest = createAsyncThunk(
   'member/fetchMembersStatisticsRequest',
   async () => {
-    const response = await congressProcessedDataApi.get('/deputados');
+    const response = await congressProcessedDataApi.get(
+      '/deputados/statistics',
+    );
     return response.data;
   },
 );

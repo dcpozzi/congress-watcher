@@ -16,7 +16,6 @@ const MembersListScreen = props => {
   const expenses = useSelector(getExpenses);
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log(memberId);
     dispatch(fetchExpensesRequest({memberId: memberId, year: '2023'}));
   }, [dispatch]);
 
